@@ -13,7 +13,7 @@ type Order {
   externalId: String!
   channel: String!
   customer: Customer! @relation(link: INLINE)
-  subTotal: Integer!
+  subTotal: Int!
   shippingStatus: String!
 }
 
@@ -30,12 +30,15 @@ type Item {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   sku: String!
-  price: Integer!
-  quantity: Integer!
+  price: Int!
+  quantity: Int!
 }
 
 type OrderLine {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   item: Item! @relation(link: INLINE)
-  quantity: Integer!
+  quantity: Int!
   order: Order! @relation(link: INLINE)
 }
