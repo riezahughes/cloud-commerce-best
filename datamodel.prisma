@@ -1,0 +1,41 @@
+type Customer {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  email: String!
+  active: Boolean!
+}
+
+type Order {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  externalId: String!
+  channel: String!
+  customer: Customer! @relation(link: INLINE)
+  subTotal: Integer!
+  shippingStatus: String!
+}
+
+type Product {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  description: String!
+}
+
+type Item {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  sku: String!
+  price: Integer!
+  quantity: Integer!
+}
+
+type OrderLine {
+  item: Item! @relation(link: INLINE)
+  quantity: Integer!
+  order: Order! @relation(link: INLINE)
+}
