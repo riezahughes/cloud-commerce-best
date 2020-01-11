@@ -1,0 +1,23 @@
+{
+  "name": "cloud-commerce-best",
+  "version": "1.0.0",
+  "description": "A simple what-if scenario in which this repo will ask: \"What if Cloud Commerce Pro was Good?\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riezahughes/cloud-commerce-best.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riezahughes/cloud-commerce-best/issues"
+  },
+  "homepage": "https://github.com/riezahughes/cloud-commerce-best#readme",
+  "dependencies": {
+    "prisma-client-lib": "^1.34.10"
+  }
+}
