@@ -14,3 +14,27 @@ ID,  [variants], title, Variant1, Variant2, Variant3, Description
 
 [Variant]
 ID, SKU, Parent_id, variant1_value, variant2_value, variant3_value, price, weight, taxabl
+
+## Setup
+
+Bring up server and db:
+```
+docker-compose up
+```
+
+Get prisma cli:
+```
+npm i -g prisma
+```
+
+Deploy schema:
+```
+prisma deploy
+```
+
+Start graphql server:
+```
+npm start
+```
+
+Happy days on http://localhost:4000/
