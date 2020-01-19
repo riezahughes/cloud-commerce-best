@@ -1,6 +1,6 @@
 const { prisma } = require("./generated/prisma-client");
 const { GraphQLServer } = require("graphql-yoga");
-const { ApolloError } = require("apollo-server-errors");
+const { validateExists } = require("./validations");
 
 const resolvers = {
   Query: {
@@ -21,22 +21,7 @@ const resolvers = {
       const productCondition = {
         id: productId
       };
-      const productExists = await context.prisma.$exists.product(
-        productCondition
-      );
-
-      if (!productExists) {
-        throw new ApolloError(
-          `Product ${JSON.stringify(productCondition)} does not exist`,
-          "NOT_FOUND",
-          {
-            association: {
-              name: "Product",
-              ...productCondition
-            }
-          }
-        );
-      }
+      await validateExists("product", productCondition, context);
 
       return context.prisma.createItem({
         product: { connect: productCondition },
