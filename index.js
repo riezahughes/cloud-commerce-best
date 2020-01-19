@@ -8,8 +8,8 @@ const resolvers = {
   Mutation: {
     createProduct: (root, { input }, context) =>
       context.prisma.createProduct(input),
-    createProduct: (root, { input: { data }, id }, context) =>
-      context.prisma.updateProduct({ data, where: { id } })
+    updateProduct: (root, { input, id }, context) =>
+      context.prisma.updateProduct({ data: input, where: { id } })
   }
 };
 
