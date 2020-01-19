@@ -32,6 +32,16 @@ type Item {
   sku: String!
   price: Int!
   quantity: Int!
+  product: Product! @relation(link: INLINE)
+  itemOptions: [ItemOption!]! @relation(name: "ItemOption")
+}
+
+type ItemOption {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  value: String!
 }
 
 type OrderLine {

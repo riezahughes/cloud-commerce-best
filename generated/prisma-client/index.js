@@ -21,6 +21,10 @@ var models = [
     embedded: false
   },
   {
+    name: "ItemOption",
+    embedded: false
+  },
+  {
     name: "OrderLine",
     embedded: false
   }

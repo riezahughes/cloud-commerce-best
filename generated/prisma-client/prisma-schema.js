@@ -11,6 +11,10 @@ type AggregateItem {
   count: Int!
 }
 
+type AggregateItemOption {
+  count: Int!
+}
+
 type AggregateOrder {
   count: Int!
 }
@@ -188,6 +192,8 @@ type Item {
   sku: String!
   price: Int!
   quantity: Int!
+  product: Product!
+  itemOptions(where: ItemOptionWhereInput, orderBy: ItemOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ItemOption!]
 }
 
 type ItemConnection {
@@ -201,6 +207,8 @@ input ItemCreateInput {
   sku: String!
   price: Int!
   quantity: Int!
+  product: ProductCreateOneInput!
+  itemOptions: ItemOptionCreateManyInput
 }
 
 input ItemCreateOneInput {
@@ -211,6 +219,255 @@ input ItemCreateOneInput {
 type ItemEdge {
   node: Item!
   cursor: String!
+}
+
+type ItemOption {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  value: String!
+}
+
+type ItemOptionConnection {
+  pageInfo: PageInfo!
+  edges: [ItemOptionEdge]!
+  aggregate: AggregateItemOption!
+}
+
+input ItemOptionCreateInput {
+  id: ID
+  name: String!
+  value: String!
+}
+
+input ItemOptionCreateManyInput {
+  create: [ItemOptionCreateInput!]
+  connect: [ItemOptionWhereUniqueInput!]
+}
+
+type ItemOptionEdge {
+  node: ItemOption!
+  cursor: String!
+}
+
+enum ItemOptionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  value_ASC
+  value_DESC
+}
+
+type ItemOptionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  value: String!
+}
+
+input ItemOptionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [ItemOptionScalarWhereInput!]
+  OR: [ItemOptionScalarWhereInput!]
+  NOT: [ItemOptionScalarWhereInput!]
+}
+
+type ItemOptionSubscriptionPayload {
+  mutation: MutationType!
+  node: ItemOption
+  updatedFields: [String!]
+  previousValues: ItemOptionPreviousValues
+}
+
+input ItemOptionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ItemOptionWhereInput
+  AND: [ItemOptionSubscriptionWhereInput!]
+  OR: [ItemOptionSubscriptionWhereInput!]
+  NOT: [ItemOptionSubscriptionWhereInput!]
+}
+
+input ItemOptionUpdateDataInput {
+  name: String
+  value: String
+}
+
+input ItemOptionUpdateInput {
+  name: String
+  value: String
+}
+
+input ItemOptionUpdateManyDataInput {
+  name: String
+  value: String
+}
+
+input ItemOptionUpdateManyInput {
+  create: [ItemOptionCreateInput!]
+  update: [ItemOptionUpdateWithWhereUniqueNestedInput!]
+  upsert: [ItemOptionUpsertWithWhereUniqueNestedInput!]
+  delete: [ItemOptionWhereUniqueInput!]
+  connect: [ItemOptionWhereUniqueInput!]
+  set: [ItemOptionWhereUniqueInput!]
+  disconnect: [ItemOptionWhereUniqueInput!]
+  deleteMany: [ItemOptionScalarWhereInput!]
+  updateMany: [ItemOptionUpdateManyWithWhereNestedInput!]
+}
+
+input ItemOptionUpdateManyMutationInput {
+  name: String
+  value: String
+}
+
+input ItemOptionUpdateManyWithWhereNestedInput {
+  where: ItemOptionScalarWhereInput!
+  data: ItemOptionUpdateManyDataInput!
+}
+
+input ItemOptionUpdateWithWhereUniqueNestedInput {
+  where: ItemOptionWhereUniqueInput!
+  data: ItemOptionUpdateDataInput!
+}
+
+input ItemOptionUpsertWithWhereUniqueNestedInput {
+  where: ItemOptionWhereUniqueInput!
+  update: ItemOptionUpdateDataInput!
+  create: ItemOptionCreateInput!
+}
+
+input ItemOptionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  value: String
+  value_not: String
+  value_in: [String!]
+  value_not_in: [String!]
+  value_lt: String
+  value_lte: String
+  value_gt: String
+  value_gte: String
+  value_contains: String
+  value_not_contains: String
+  value_starts_with: String
+  value_not_starts_with: String
+  value_ends_with: String
+  value_not_ends_with: String
+  AND: [ItemOptionWhereInput!]
+  OR: [ItemOptionWhereInput!]
+  NOT: [ItemOptionWhereInput!]
+}
+
+input ItemOptionWhereUniqueInput {
+  id: ID
 }
 
 enum ItemOrderByInput {
@@ -259,12 +516,16 @@ input ItemUpdateDataInput {
   sku: String
   price: Int
   quantity: Int
+  product: ProductUpdateOneRequiredInput
+  itemOptions: ItemOptionUpdateManyInput
 }
 
 input ItemUpdateInput {
   sku: String
   price: Int
   quantity: Int
+  product: ProductUpdateOneRequiredInput
+  itemOptions: ItemOptionUpdateManyInput
 }
 
 input ItemUpdateManyMutationInput {
@@ -346,6 +607,10 @@ input ItemWhereInput {
   quantity_lte: Int
   quantity_gt: Int
   quantity_gte: Int
+  product: ProductWhereInput
+  itemOptions_every: ItemOptionWhereInput
+  itemOptions_some: ItemOptionWhereInput
+  itemOptions_none: ItemOptionWhereInput
   AND: [ItemWhereInput!]
   OR: [ItemWhereInput!]
   NOT: [ItemWhereInput!]
@@ -370,6 +635,12 @@ type Mutation {
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   deleteItem(where: ItemWhereUniqueInput!): Item
   deleteManyItems(where: ItemWhereInput): BatchPayload!
+  createItemOption(data: ItemOptionCreateInput!): ItemOption!
+  updateItemOption(data: ItemOptionUpdateInput!, where: ItemOptionWhereUniqueInput!): ItemOption
+  updateManyItemOptions(data: ItemOptionUpdateManyMutationInput!, where: ItemOptionWhereInput): BatchPayload!
+  upsertItemOption(where: ItemOptionWhereUniqueInput!, create: ItemOptionCreateInput!, update: ItemOptionUpdateInput!): ItemOption!
+  deleteItemOption(where: ItemOptionWhereUniqueInput!): ItemOption
+  deleteManyItemOptions(where: ItemOptionWhereInput): BatchPayload!
   createOrder(data: OrderCreateInput!): Order!
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
@@ -757,6 +1028,11 @@ input ProductCreateInput {
   description: String!
 }
 
+input ProductCreateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
 type ProductEdge {
   node: Product!
   cursor: String!
@@ -801,6 +1077,11 @@ input ProductSubscriptionWhereInput {
   NOT: [ProductSubscriptionWhereInput!]
 }
 
+input ProductUpdateDataInput {
+  title: String
+  description: String
+}
+
 input ProductUpdateInput {
   title: String
   description: String
@@ -809,6 +1090,18 @@ input ProductUpdateInput {
 input ProductUpdateManyMutationInput {
   title: String
   description: String
+}
+
+input ProductUpdateOneRequiredInput {
+  create: ProductCreateInput
+  update: ProductUpdateDataInput
+  upsert: ProductUpsertNestedInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductUpsertNestedInput {
+  update: ProductUpdateDataInput!
+  create: ProductCreateInput!
 }
 
 input ProductWhereInput {
@@ -886,6 +1179,9 @@ type Query {
   item(where: ItemWhereUniqueInput!): Item
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  itemOption(where: ItemOptionWhereUniqueInput!): ItemOption
+  itemOptions(where: ItemOptionWhereInput, orderBy: ItemOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ItemOption]!
+  itemOptionsConnection(where: ItemOptionWhereInput, orderBy: ItemOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemOptionConnection!
   order(where: OrderWhereUniqueInput!): Order
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
@@ -901,6 +1197,7 @@ type Query {
 type Subscription {
   customer(where: CustomerSubscriptionWhereInput): CustomerSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  itemOption(where: ItemOptionSubscriptionWhereInput): ItemOptionSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderLine(where: OrderLineSubscriptionWhereInput): OrderLineSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
