@@ -4,6 +4,12 @@ const { GraphQLServer } = require("graphql-yoga");
 const resolvers = {
   Query: {
     customers: (root, args, context) => context.prisma.customers()
+  },
+  Mutation: {
+    createProduct: (root, { input }, context) =>
+      context.prisma.createProduct(input),
+    createProduct: (root, { input: { data }, id }, context) =>
+      context.prisma.updateProduct({ data, where: { id } })
   }
 };
 
