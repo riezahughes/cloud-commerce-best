@@ -3,3 +3,23 @@
 type Query {
   customers: [Customer!]!
 }
+
+type Mutaion {
+  createProduct(input: ProductInput!): Product!
+  updateProduct(id: ID!, input: ProductInput!): Product!
+  createItem(input: ItemInput!): Item!
+  updateItem(id: ID!, input: ItemInput!): Item!
+}
+
+input ProductInput {
+  title: String
+  description: String
+}
+
+input ItemInput {
+  sku: String
+  price: Int
+  quantity: Int
+  productId: ID
+  itemOptions: [ItemOption!]
+}

@@ -377,7 +377,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export interface ProductCreateInput {
   id?: Maybe<ID_Input>;
   title: String;
-  description: String;
+  description?: Maybe<String>;
 }
 
 export type CustomerWhereUniqueInput = AtLeastOne<{
@@ -1194,7 +1194,7 @@ export interface ProductPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   title: String;
-  description: String;
+  description?: String;
 }
 
 export interface ProductPreviousValuesPromise
@@ -1793,7 +1793,7 @@ export interface Product {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   title: String;
-  description: String;
+  description?: String;
 }
 
 export interface ProductPromise extends Promise<Product>, Fragmentable {

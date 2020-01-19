@@ -1013,7 +1013,7 @@ type Product {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
-  description: String!
+  description: String
 }
 
 type ProductConnection {
@@ -1025,7 +1025,7 @@ type ProductConnection {
 input ProductCreateInput {
   id: ID
   title: String!
-  description: String!
+  description: String
 }
 
 input ProductCreateOneInput {
@@ -1056,7 +1056,7 @@ type ProductPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
-  description: String!
+  description: String
 }
 
 type ProductSubscriptionPayload {
