@@ -6,7 +6,8 @@ const resolvers = {
   Query: {
     customers: (root, args, context) => context.prisma.customers(),
     products: (root, args, context) => context.prisma.products(),
-    items: (root, args, context) => context.prisma.items()
+    items: (root, args, context) => context.prisma.items(),
+    itemOptions: (root, args, context) => context.prisma.itemOptions()
   },
   Mutation: {
     createProduct: (root, { input }, context) =>
@@ -45,10 +46,45 @@ const resolvers = {
         },
         where: { id }
       });
+    },
+    createItemOption: async (
+      root,
+      { input: { name, value, itemId } },
+      context
+    ) => {
+      const itemCondition = { id: itemId };
+      await validateExists("item", itemCondition, context);
+
+      return context.prisma.createItemOption({
+        item: { connect: itemCondition },
+        name,
+        value
+      });
+    },
+    updateItemOption: async (
+      root,
+      { input: { itemId, name, value }, id },
+      context
+    ) => {
+      const itemCondition = { id: itemId };
+      await validateExists("item", itemCondition, context);
+
+      return context.prisma.updateItemOption({
+        data: {
+          ...(itemId && { item: { connect: itemCondition } }),
+          name,
+          value
+        },
+        where: { id }
+      });
     }
   },
   Item: {
     product: parent => prisma.item({ id: parent.id }).product()
+    // itemOptions: parent => prisma.item({ id: parent.id }).itemOptions()
+  },
+  ItemOption: {
+    item: parent => prisma.itemOption({ id: parent.id }).item()
   }
 };
 

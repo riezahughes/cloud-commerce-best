@@ -208,12 +208,25 @@ input ItemCreateInput {
   price: Int!
   quantity: Int!
   product: ProductCreateOneInput!
-  itemOptions: ItemOptionCreateManyInput
+  itemOptions: ItemOptionCreateManyWithoutItemInput
 }
 
 input ItemCreateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
+}
+
+input ItemCreateOneWithoutItemOptionsInput {
+  create: ItemCreateWithoutItemOptionsInput
+  connect: ItemWhereUniqueInput
+}
+
+input ItemCreateWithoutItemOptionsInput {
+  id: ID
+  sku: String!
+  price: Int!
+  quantity: Int!
+  product: ProductCreateOneInput!
 }
 
 type ItemEdge {
@@ -227,6 +240,7 @@ type ItemOption {
   updatedAt: DateTime!
   name: String!
   value: String!
+  item: Item!
 }
 
 type ItemOptionConnection {
@@ -239,11 +253,18 @@ input ItemOptionCreateInput {
   id: ID
   name: String!
   value: String!
+  item: ItemCreateOneWithoutItemOptionsInput!
 }
 
-input ItemOptionCreateManyInput {
-  create: [ItemOptionCreateInput!]
+input ItemOptionCreateManyWithoutItemInput {
+  create: [ItemOptionCreateWithoutItemInput!]
   connect: [ItemOptionWhereUniqueInput!]
+}
+
+input ItemOptionCreateWithoutItemInput {
+  id: ID
+  name: String!
+  value: String!
 }
 
 type ItemOptionEdge {
@@ -354,14 +375,10 @@ input ItemOptionSubscriptionWhereInput {
   NOT: [ItemOptionSubscriptionWhereInput!]
 }
 
-input ItemOptionUpdateDataInput {
-  name: String
-  value: String
-}
-
 input ItemOptionUpdateInput {
   name: String
   value: String
+  item: ItemUpdateOneRequiredWithoutItemOptionsInput
 }
 
 input ItemOptionUpdateManyDataInput {
@@ -369,21 +386,21 @@ input ItemOptionUpdateManyDataInput {
   value: String
 }
 
-input ItemOptionUpdateManyInput {
-  create: [ItemOptionCreateInput!]
-  update: [ItemOptionUpdateWithWhereUniqueNestedInput!]
-  upsert: [ItemOptionUpsertWithWhereUniqueNestedInput!]
+input ItemOptionUpdateManyMutationInput {
+  name: String
+  value: String
+}
+
+input ItemOptionUpdateManyWithoutItemInput {
+  create: [ItemOptionCreateWithoutItemInput!]
   delete: [ItemOptionWhereUniqueInput!]
   connect: [ItemOptionWhereUniqueInput!]
   set: [ItemOptionWhereUniqueInput!]
   disconnect: [ItemOptionWhereUniqueInput!]
+  update: [ItemOptionUpdateWithWhereUniqueWithoutItemInput!]
+  upsert: [ItemOptionUpsertWithWhereUniqueWithoutItemInput!]
   deleteMany: [ItemOptionScalarWhereInput!]
   updateMany: [ItemOptionUpdateManyWithWhereNestedInput!]
-}
-
-input ItemOptionUpdateManyMutationInput {
-  name: String
-  value: String
 }
 
 input ItemOptionUpdateManyWithWhereNestedInput {
@@ -391,15 +408,20 @@ input ItemOptionUpdateManyWithWhereNestedInput {
   data: ItemOptionUpdateManyDataInput!
 }
 
-input ItemOptionUpdateWithWhereUniqueNestedInput {
-  where: ItemOptionWhereUniqueInput!
-  data: ItemOptionUpdateDataInput!
+input ItemOptionUpdateWithoutItemDataInput {
+  name: String
+  value: String
 }
 
-input ItemOptionUpsertWithWhereUniqueNestedInput {
+input ItemOptionUpdateWithWhereUniqueWithoutItemInput {
   where: ItemOptionWhereUniqueInput!
-  update: ItemOptionUpdateDataInput!
-  create: ItemOptionCreateInput!
+  data: ItemOptionUpdateWithoutItemDataInput!
+}
+
+input ItemOptionUpsertWithWhereUniqueWithoutItemInput {
+  where: ItemOptionWhereUniqueInput!
+  update: ItemOptionUpdateWithoutItemDataInput!
+  create: ItemOptionCreateWithoutItemInput!
 }
 
 input ItemOptionWhereInput {
@@ -461,6 +483,7 @@ input ItemOptionWhereInput {
   value_not_starts_with: String
   value_ends_with: String
   value_not_ends_with: String
+  item: ItemWhereInput
   AND: [ItemOptionWhereInput!]
   OR: [ItemOptionWhereInput!]
   NOT: [ItemOptionWhereInput!]
@@ -517,7 +540,7 @@ input ItemUpdateDataInput {
   price: Int
   quantity: Int
   product: ProductUpdateOneRequiredInput
-  itemOptions: ItemOptionUpdateManyInput
+  itemOptions: ItemOptionUpdateManyWithoutItemInput
 }
 
 input ItemUpdateInput {
@@ -525,7 +548,7 @@ input ItemUpdateInput {
   price: Int
   quantity: Int
   product: ProductUpdateOneRequiredInput
-  itemOptions: ItemOptionUpdateManyInput
+  itemOptions: ItemOptionUpdateManyWithoutItemInput
 }
 
 input ItemUpdateManyMutationInput {
@@ -541,9 +564,28 @@ input ItemUpdateOneRequiredInput {
   connect: ItemWhereUniqueInput
 }
 
+input ItemUpdateOneRequiredWithoutItemOptionsInput {
+  create: ItemCreateWithoutItemOptionsInput
+  update: ItemUpdateWithoutItemOptionsDataInput
+  upsert: ItemUpsertWithoutItemOptionsInput
+  connect: ItemWhereUniqueInput
+}
+
+input ItemUpdateWithoutItemOptionsDataInput {
+  sku: String
+  price: Int
+  quantity: Int
+  product: ProductUpdateOneRequiredInput
+}
+
 input ItemUpsertNestedInput {
   update: ItemUpdateDataInput!
   create: ItemCreateInput!
+}
+
+input ItemUpsertWithoutItemOptionsInput {
+  update: ItemUpdateWithoutItemOptionsDataInput!
+  create: ItemCreateWithoutItemOptionsInput!
 }
 
 input ItemWhereInput {

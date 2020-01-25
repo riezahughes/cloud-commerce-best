@@ -4,6 +4,7 @@ type Query {
   customers: [Customer!]!
   products: [Product!]!
   items: [Item!]!
+  itemOptions: [ItemOption!]!
 }
 
 type Mutation {
@@ -11,6 +12,8 @@ type Mutation {
   updateProduct(id: ID!, input: ProductInput!): Product!
   createItem(input: ItemInput!): Item!
   updateItem(id: ID!, input: ItemInput!): Item!
+  createItemOption(input: ItemOptionInput!): ItemOption!
+  updateItemOption(id: ID!, input: ItemOptionInput!): ItemOption!
 }
 
 input ProductInput {
@@ -23,10 +26,10 @@ input ItemInput {
   price: Int
   quantity: Int
   productId: ID
-  itemOptions: [ItemOptionInput!]
 }
 
 input ItemOptionInput {
-  name: String!
-  value: String!
+  name: String
+  value: String
+  itemId: ID
 }
