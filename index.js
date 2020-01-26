@@ -80,8 +80,8 @@ const resolvers = {
     }
   },
   Item: {
-    product: parent => prisma.item({ id: parent.id }).product()
-    // itemOptions: parent => prisma.item({ id: parent.id }).itemOptions()
+    product: parent => prisma.item({ id: parent.id }).product(),
+    itemOptions: parent => prisma.item({ id: parent.id }).itemOptions()
   },
   ItemOption: {
     item: parent => prisma.itemOption({ id: parent.id }).item()

@@ -33,7 +33,7 @@ type Item {
   price: Int!
   quantity: Int!
   product: Product! @relation(link: INLINE)
-  itemOptions: [ItemOption!]! @relation(link: TABLE, name: "ItemOption")
+  itemOptions: [ItemOption!]! @relation(name: "ItemItemOption")
 }
 
 type ItemOption {
@@ -42,7 +42,7 @@ type ItemOption {
   updatedAt: DateTime! @updatedAt
   name: String!
   value: String!
-  item: Item! @relation(link: INLINE, name: "Item")
+  item: Item! @relation(name: "ItemItemOption")
 }
 
 type OrderLine {
