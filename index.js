@@ -1,83 +1,20 @@
 const { prisma } = require("./generated/prisma-client");
 const { GraphQLServer } = require("graphql-yoga");
-const { validateExists } = require("./validations");
+const productResolvers = require("./resolvers/product");
+const itemResolvers = require("./resolvers/item");
+const itemOptionResolvers = require("./resolvers/itemOption");
 
 const resolvers = {
   Query: {
     customers: (root, args, context) => context.prisma.customers(),
-    products: (root, args, context) => context.prisma.products(),
-    items: (root, args, context) => context.prisma.items(),
-    itemOptions: (root, args, context) => context.prisma.itemOptions()
+    ...productResolvers.Query,
+    ...itemResolvers.Query,
+    ...itemOptionResolvers.Query
   },
   Mutation: {
-    createProduct: (root, { input }, context) =>
-      context.prisma.createProduct(input),
-    updateProduct: (root, { input, id }, context) =>
-      context.prisma.updateProduct({ data: input, where: { id } }),
-    createItem: async (
-      root,
-      { input: { productId, sku, price, quantity } },
-      context
-    ) => {
-      const productCondition = { id: productId };
-      await validateExists("product", productCondition, context);
-
-      return context.prisma.createItem({
-        product: { connect: productCondition },
-        sku,
-        price,
-        quantity
-      });
-    },
-    updateItem: async (
-      root,
-      { input: { productId, sku, price, quantity }, id },
-      context
-    ) => {
-      const productCondition = { id: productId };
-      await validateExists("product", productCondition, context);
-
-      return context.prisma.updateItem({
-        data: {
-          ...(productId && { product: { connect: productCondition } }),
-          sku,
-          price,
-          quantity
-        },
-        where: { id }
-      });
-    },
-    createItemOption: async (
-      root,
-      { input: { name, value, itemId } },
-      context
-    ) => {
-      const itemCondition = { id: itemId };
-      await validateExists("item", itemCondition, context);
-
-      return context.prisma.createItemOption({
-        item: { connect: itemCondition },
-        name,
-        value
-      });
-    },
-    updateItemOption: async (
-      root,
-      { input: { itemId, name, value }, id },
-      context
-    ) => {
-      const itemCondition = { id: itemId };
-      await validateExists("item", itemCondition, context);
-
-      return context.prisma.updateItemOption({
-        data: {
-          ...(itemId && { item: { connect: itemCondition } }),
-          name,
-          value
-        },
-        where: { id }
-      });
-    }
+    ...productResolvers.Mutation,
+    ...itemResolvers.Mutation,
+    ...itemOptionResolvers.Mutation
   },
   Item: {
     product: parent => prisma.item({ id: parent.id }).product(),
